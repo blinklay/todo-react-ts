@@ -2,13 +2,15 @@ import styled from "styled-components";
 import Container from "./Container";
 import Search from "./Search";
 import ThemeButton from "./ThemeButton";
+import AddButton from "./AddButton";
+import ToDoList from "./TodoList";
 
 const TodoHeader = styled.h1`
   text-transform: uppercase;
   font-size: 26px;
   font-weight: 600;
   text-align: center;
-  margin-top: 40px;
+  padding-top: 40px;
 `;
 
 const TodoActions = styled.div`
@@ -20,12 +22,15 @@ const TodoActions = styled.div`
 export default function TodoLayout() {
   return (
     <Container>
+      <AddButton />
       <TodoHeader>todo list</TodoHeader>
 
       <TodoActions>
         <Search />
         <ThemeButton />
       </TodoActions>
+
+      <ToDoList />
     </Container>
   );
 }

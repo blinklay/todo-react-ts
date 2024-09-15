@@ -9,8 +9,13 @@ body {
   font-size: 18px;
   color: var(--color-text-main);
   line-height: 1.2;
+  height: 100vh;
 }
 
 a {
   color: inherit;
+}
+
+:root {
+  height: 100vh;
 }

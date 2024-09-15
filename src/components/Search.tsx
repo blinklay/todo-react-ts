@@ -13,6 +13,7 @@ const Insert = styled.input`
   border-radius: 5px;
   outline: none;
   width: 100%;
+  color: var(--color-accent);
   &::placeholder {
     color: #c3c1e5;
   }
