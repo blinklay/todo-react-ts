@@ -2,9 +2,15 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { closeModal } from "../slices/modalSlice";
 import { AppDispatch, RootState } from "../slices";
+import { useState } from "react";
+import { addTodo } from "../slices/todoSlice";
 
 interface ModalLayoutProps {
   showmodal: boolean;
+}
+
+interface ThemeProps {
+  theme: string;
 }
 
 const ModalLayout = styled.div<ModalLayoutProps>`
@@ -23,11 +29,14 @@ const ModalLayout = styled.div<ModalLayoutProps>`
   visibility: ${(props) => (props.showmodal ? "visible" : "hidden")};
 `;
 
-const ModalBody = styled.div`
-  background-color: #fff;
+const ModalBody = styled.div<ThemeProps>`
+  background-color: ${(props) =>
+    props.theme === "dark" ? "transparent" : "var(--color-background-main)"};
   border-radius: 16px;
   padding: 18px; 30px;
   width: 500px;
+  border: 1px solid ${(props) =>
+    props.theme === "dark" ? "var(--color-background-main)" : "transparent"};
 `;
 const Title = styled.h2`
   font-size: 24px;
@@ -35,18 +44,27 @@ const Title = styled.h2`
   text-align: center;
   text-transform: uppercase;
 `;
-const Input = styled.input`
+const Input = styled.input<ThemeProps>`
   margin-top: 25px;
   border-radius: 5px;
-  border: 1px solid var(--color-accent);
-  color: var(--color-accent);
+  border: 1px solid
+    ${(props) =>
+      props.theme === "dark"
+        ? "var(--color-background-main)"
+        : "var(--color-accent)"};
+  color: ${(props) =>
+    props.theme === "dark"
+      ? "var(--color-background-main)"
+      : "var(--color-accent)"};
   padding: 11px 16px;
   font-size: 16px;
   width: 100%;
   outline: none;
+  background: ${(props) =>
+    props.theme === "dark" ? "transparent" : "var(--color-background-main)"};
 
   &::placeholder {
-    color: #c3c1e5;
+    color: ${(props) => (props.theme === "dark" ? "#666666" : "#c3c1e5")};
   }
 `;
 const Actions = styled.div`
@@ -63,7 +81,7 @@ const ActionButton = styled.button`
   color: ${(props) =>
     props.color === "accent" ? "#fff" : "var(--color-accent)"};
   background-color: ${(props) =>
-    props.color === "accent" ? "var(--color-accent)" : "#fff"};
+    props.color === "accent" ? "var(--color-accent)" : "transparent"};
   border: 1px solid
     ${(props) =>
       props.color === "accent" ? "transparent" : "var(--color-accent)"};
@@ -72,17 +90,36 @@ const ActionButton = styled.button`
 export default function Modal() {
   const dispatch: AppDispatch = useDispatch();
   const isOpen = useSelector((state: RootState) => state.modal.isOpen);
+  const [value, setValue] = useState<string>("");
+  const theme = useSelector((state: RootState) => state.theme.value);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
+
+  const addToList = () => {
+    dispatch(closeModal());
+    dispatch(addTodo(value));
+  };
+
   return (
     <ModalLayout showmodal={isOpen}>
-      <ModalBody>
+      <ModalBody theme={theme}>
         <Title>New Note</Title>
-        <Input placeholder="Input your note..." />
+        <Input
+          theme={theme}
+          value={value}
+          onChange={handleChange}
+          placeholder="Input your note..."
+        />
 
         <Actions>
           <ActionButton onClick={() => dispatch(closeModal())}>
             cancel
           </ActionButton>
-          <ActionButton color="accent">Apply</ActionButton>
+          <ActionButton onClick={addToList} color="accent">
+            Apply
+          </ActionButton>
         </Actions>
       </ModalBody>
     </ModalLayout>

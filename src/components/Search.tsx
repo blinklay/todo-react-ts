@@ -1,4 +1,10 @@
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { RootState } from "../slices";
+
+interface ThemeProps {
+  theme: string;
+}
 
 const SearchLayout = styled.div`
   display: flex;
@@ -6,16 +12,24 @@ const SearchLayout = styled.div`
   flex: 1;
 `;
 
-const Insert = styled.input`
+const Insert = styled.input<ThemeProps>`
   padding: 11px 16px;
-  border: 1px solid var(--color-accent);
+  border: 1px solid
+    ${(props) =>
+      props.theme === "dark"
+        ? "var(--color-background-main)"
+        : "var(--color-accent)"};
   font-size: 16px;
   border-radius: 5px;
   outline: none;
+  background: ${(props) => (props.theme === "dark" ? "transparent" : "")};
   width: 100%;
-  color: var(--color-accent);
+  color: ${(props) =>
+    props.theme === "dark"
+      ? "var(--color-background-main)"
+      : "var(--color-accent)"};
   &::placeholder {
-    color: #c3c1e5;
+    color: ${(props) => (props.theme === "dark" ? "#666666" : "#c3c1e5")};
   }
 `;
 
@@ -31,13 +45,20 @@ const ButtonSearch = styled.button`
   transform: translateY(-50%);
   right: 0;
   padding-right: 16px;
+
+  & > svg path {
+    fill: ${(props) =>
+      props.theme === "dark" ? "var(--color-background-main)" : "#6C63FF"};
+  }
 `;
 
 export default function Search() {
+  const theme = useSelector((state: RootState) => state.theme.value);
+
   return (
     <SearchLayout>
-      <Insert placeholder="Search note..." />
-      <ButtonSearch>
+      <Insert placeholder="Search note..." theme={theme} />
+      <ButtonSearch theme={theme}>
         <svg
           width="21"
           height="22"
