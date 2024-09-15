@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { AppDispatch } from "../slices";
+import { AppDispatch, RootState } from "../slices";
 import { changeStatus, editTitle, removeTodo } from "../slices/todoSlice";
-
 interface ItemProps {
   id: number;
   title: string;
@@ -17,6 +16,10 @@ interface CheckboxProps {
 
 interface LabelProps {
   htmlFor: number;
+}
+
+interface ThemeProps {
+  theme: string;
 }
 
 const Item = styled.li`
@@ -81,21 +84,24 @@ const ActiconButton = styled.button`
   border: none;
 `;
 
-const Input = styled.input`
+const Input = styled.input<ThemeProps>`
   border: none;
   font-size: 20px;
   font-weight: 600;
   width: 100%;
   outline: none;
   background: transparent;
+  color: ${(props) =>
+    props.theme === "dark" ? "var(--color-background-main)" : "#000"};
   border-bottom: 1px solid var(--color-accent);
-  }
+  transition: 0.3s;
 `;
 
 const ToDoItem: React.FC<ItemProps> = ({ id, title, isCompleted }) => {
   const [value, setValue] = useState(title);
   const [isEdit, setIsEdit] = useState(false);
   const dispatch: AppDispatch = useDispatch();
+  const theme = useSelector((state: RootState) => state.theme.value);
 
   return (
     <Item>
@@ -112,7 +118,11 @@ const ToDoItem: React.FC<ItemProps> = ({ id, title, isCompleted }) => {
           <Title>{title}</Title>
         </Label>
       ) : (
-        <Input value={value} onChange={(e) => setValue(e.target.value)} />
+        <Input
+          theme={theme}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+        />
       )}
 
       <ItemActions>

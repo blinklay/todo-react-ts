@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { RootState } from "../slices";
+import { useState } from "react";
 
 interface ThemeProps {
   theme: string;
@@ -13,6 +14,7 @@ const SearchLayout = styled.div`
 `;
 
 const Insert = styled.input<ThemeProps>`
+  transition: 0.3s;
   padding: 11px 16px;
   border: 1px solid
     ${(props) =>
@@ -33,7 +35,7 @@ const Insert = styled.input<ThemeProps>`
   }
 `;
 
-const ButtonSearch = styled.button`
+const ButtonSearch = styled.button<ThemeProps>`
   display: flex;
   align-items: center;
   justify-contnet: center;
@@ -45,7 +47,7 @@ const ButtonSearch = styled.button`
   transform: translateY(-50%);
   right: 0;
   padding-right: 16px;
-
+  transition: 0.3s;
   & > svg path {
     fill: ${(props) =>
       props.theme === "dark" ? "var(--color-background-main)" : "#6C63FF"};
@@ -54,10 +56,20 @@ const ButtonSearch = styled.button`
 
 export default function Search() {
   const theme = useSelector((state: RootState) => state.theme.value);
+  const [value, setValue] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
 
   return (
     <SearchLayout>
-      <Insert placeholder="Search note..." theme={theme} />
+      <Insert
+        placeholder="Search note..."
+        value={value}
+        onChange={handleChange}
+        theme={theme}
+      />
       <ButtonSearch theme={theme}>
         <svg
           width="21"
