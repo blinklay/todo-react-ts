@@ -4,6 +4,9 @@ import Search from "./Search";
 import ThemeButton from "./ThemeButton";
 import AddButton from "./AddButton";
 import ToDoList from "./TodoList";
+import Modal from "./Modal";
+import { useDispatch, useSelector } from "react-redux";
+import { openModal } from "../slices/modalSlice";
 
 const TodoHeader = styled.h1`
   text-transform: uppercase;
@@ -20,17 +23,28 @@ const TodoActions = styled.div`
 `;
 
 export default function TodoLayout() {
+  const isOpen = useSelector((state) => state.modal.isOpen);
+  const dispatch = useDispatch();
+
+  const showModal = () => {
+    dispatch(openModal());
+  };
+
   return (
-    <Container>
-      <AddButton />
-      <TodoHeader>todo list</TodoHeader>
+    <>
+      <Modal />
 
-      <TodoActions>
-        <Search />
-        <ThemeButton />
-      </TodoActions>
+      <Container>
+        <AddButton onClick={showModal} />
+        <TodoHeader>todo list</TodoHeader>
 
-      <ToDoList />
-    </Container>
+        <TodoActions>
+          <Search />
+          <ThemeButton />
+        </TodoActions>
+
+        <ToDoList />
+      </Container>
+    </>
   );
 }

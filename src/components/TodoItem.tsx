@@ -49,7 +49,6 @@ const Checkbox = styled.input`
 const Title = styled.h2`
   font-size: 20px;
   font-weight: 600;
-  background-image: url(${(props) => props.imageSrc});
 `;
 
 const ItemActions = styled.div`
