@@ -55,7 +55,9 @@ const todoSlice = createSlice({
       });
     },
     filterTodo: (state, action: PayloadAction<string>) => {
-      state.temp = [...state.todos];
+      if (state.temp.length === 0) {
+        state.temp = [...state.todos];
+      }
       state.todos = state.todos.filter((item) =>
         item.title.includes(action.payload)
       );

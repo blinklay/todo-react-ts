@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { closeModal } from "../slices/modalSlice";
 import { AppDispatch, RootState } from "../slices";
 import { useState } from "react";
-import { addTodo } from "../slices/todoSlice";
+import { addTodo, cancelFiltered } from "../slices/todoSlice";
 
 interface ModalLayoutProps {
   showmodal: boolean;
@@ -99,6 +99,7 @@ export default function Modal() {
 
   const addToList = () => {
     dispatch(closeModal());
+    dispatch(cancelFiltered());
     dispatch(addTodo(value));
   };
 

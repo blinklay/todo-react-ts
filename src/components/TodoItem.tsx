@@ -71,6 +71,9 @@ const Checkbox = styled.input<CheckboxProps>`
 const Title = styled.h2`
   font-size: 20px;
   font-weight: 600;
+  max-height: 48px;
+  word-break: break-all;
+  overflow-y: auto;
 `;
 
 const ItemActions = styled.div`
