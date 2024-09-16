@@ -8,6 +8,7 @@ interface Todo {
 
 interface TodoState {
   todos: Todo[];
+  temp: Todo[];
   nextIndex: number;
 }
 
@@ -18,6 +19,7 @@ interface TodoEditTitle {
 
 const initialState: TodoState = {
   todos: [],
+  temp: [],
   nextIndex: 0,
 };
 
@@ -52,9 +54,25 @@ const todoSlice = createSlice({
         return item;
       });
     },
+    filterTodo: (state, action: PayloadAction<string>) => {
+      state.temp = [...state.todos];
+      state.todos = state.todos.filter((item) =>
+        item.title.includes(action.payload)
+      );
+    },
+    cancelFiltered: (state) => {
+      state.todos = [...state.temp];
+      state.temp = [];
+    },
   },
 });
 
-export const { addTodo, removeTodo, changeStatus, editTitle } =
-  todoSlice.actions;
+export const {
+  addTodo,
+  removeTodo,
+  changeStatus,
+  editTitle,
+  filterTodo,
+  cancelFiltered,
+} = todoSlice.actions;
 export default todoSlice.reducer;

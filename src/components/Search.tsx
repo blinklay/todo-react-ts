@@ -1,7 +1,8 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { RootState } from "../slices";
+import { AppDispatch, RootState } from "../slices";
 import { useState } from "react";
+import { cancelFiltered, filterTodo } from "../slices/todoSlice";
 
 interface ThemeProps {
   theme: string;
@@ -55,11 +56,20 @@ const ButtonSearch = styled.button<ThemeProps>`
 `;
 
 export default function Search() {
+  const dispatch: AppDispatch = useDispatch();
   const theme = useSelector((state: RootState) => state.theme.value);
   const [value, setValue] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
+  };
+
+  const filterItems = () => {
+    if (value === "") {
+      dispatch(cancelFiltered());
+    } else {
+      dispatch(filterTodo(value));
+    }
   };
 
   return (
@@ -70,7 +80,7 @@ export default function Search() {
         onChange={handleChange}
         theme={theme}
       />
-      <ButtonSearch theme={theme}>
+      <ButtonSearch theme={theme} onClick={filterItems}>
         <svg
           width="21"
           height="22"
