@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface AddButtonProps {
+  onClick: React.MouseEventHandler<HTMLButtonElement>; // Типизируем onClick
+}
+
 const Button = styled.button`
   diplay: flex;
   align-items: center;
@@ -14,7 +18,7 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-export default function AddButton({ onClick }) {
+export default function AddButton({ onClick }: AddButtonProps) {
   return (
     <Button onClick={onClick}>
       <svg

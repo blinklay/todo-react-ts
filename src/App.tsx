@@ -4,16 +4,16 @@ import { useSelector } from "react-redux";
 import { RootState } from "./slices";
 
 interface ThemeProps {
-  theme: string;
+  themes: string;
 }
 
 const GlobalStyle = createGlobalStyle<ThemeProps>`
  body {
  background: ${(props) =>
-   props.theme === "dark" ? "var(--color-background-dark)" : "#fff"};
+   props.themes === "dark" ? "var(--color-background-dark)" : "#fff"};
    transition: .3s;
    color: ${(props) =>
-     props.theme === "dark"
+     props.themes === "dark"
        ? "var(--color-background-main)"
        : "var(--color-text-main)"};
 }
@@ -21,11 +21,10 @@ const GlobalStyle = createGlobalStyle<ThemeProps>`
 
 function App() {
   const theme = useSelector((state: RootState) => state.theme.value);
-  console.log(theme);
 
   return (
     <>
-      <GlobalStyle theme={theme} />
+      <GlobalStyle themes={theme} />
       <TodoLayout />
     </>
   );
