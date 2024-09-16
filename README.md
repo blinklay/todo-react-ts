@@ -1,50 +1,64 @@
-# React + TypeScript + Vite
+# ToDo List - React + TypeScript
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![App Screenshot 1](public/3.jpg)
 
-Currently, two official plugins are available:
+## Описание
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Это приложение для управления списком задач с расширенным функционалом:
+- **Добавление задач**: Возможность добавлять новые задачи с указанием их названия.
+- **Удаление задач**: Удаление задач из списка по клику на соответствующую кнопку.
+- **Изменение статуса выполнения**: Отметка задач как выполненные или невыполненные.
+- **Поиск по задачам**: Поле поиска для фильтрации задач по названию.
+- **Переключение темы**: Возможность переключения между светлой и тёмной темой.
+- **Сохранение данных в localStorage**: Список задач и текущая тема сохраняются в `localStorage`, что позволяет сохранять данные между сессиями.
 
-## Expanding the ESLint configuration
+Приложение разработано с использованием следующих технологий:
+- **React** + **Vite**
+- **TypeScript**
+- **Styled Components**
+- **Redux Toolkit**
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Демо
 
-- Configure the top-level `parserOptions` property like this:
+Приложение доступно по следующей ссылке:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+[ToDo List - GitHub Pages](https://blinklay.github.io/todo-react-ts/)
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Скриншоты
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Светлая тема
+![App Screenshot 2](public/2.jpg)
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### Тёмная тема
+![App Screenshot 3](public/1.png)
+
+## Установка и запуск
+
+Для локального запуска приложения выполните следующие шаги:
+
+1. Клонируйте репозиторий:
+
+    ```bash
+    git clone https://github.com/blinklay/todo-react-ts.git
+    ```
+
+2. Перейдите в директорию проекта:
+
+    ```bash
+    cd todo-react-ts
+    ```
+
+3. Установите зависимости:
+
+    ```bash
+    npm install
+    ```
+
+4. Запустите приложение:
+
+    ```bash
+    npm run dev
+    ```
+
+После этого приложение будет доступно по адресу `http://localhost:3000`.
+
