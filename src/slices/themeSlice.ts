@@ -5,7 +5,9 @@ interface ThemeState {
 }
 
 const initialState: ThemeState = {
-  value: "light",
+  value: localStorage.getItem("theme")
+    ? JSON.parse(localStorage.getItem("theme") as string)
+    : "light",
 };
 
 const themeSlice = createSlice({
@@ -14,6 +16,7 @@ const themeSlice = createSlice({
   reducers: {
     setTheme: (state) => {
       state.value = state.value === "dark" ? "light" : "dark";
+      localStorage.setItem("theme", JSON.stringify(state.value));
     },
   },
 });

@@ -90,8 +90,9 @@ const ActionButton = styled.button`
 export default function Modal() {
   const dispatch: AppDispatch = useDispatch();
   const isOpen = useSelector((state: RootState) => state.modal.isOpen);
-  const [value, setValue] = useState<string>("");
   const theme = useSelector((state: RootState) => state.theme.value);
+  const { todos, temp } = useSelector((state: RootState) => state.todo);
+  const [value, setValue] = useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -99,8 +100,11 @@ export default function Modal() {
 
   const addToList = () => {
     dispatch(closeModal());
-    dispatch(cancelFiltered());
+    if (todos.length < temp.length) {
+      dispatch(cancelFiltered());
+    }
     dispatch(addTodo(value));
+    setValue("");
   };
 
   return (

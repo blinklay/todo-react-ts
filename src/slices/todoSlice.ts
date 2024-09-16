@@ -18,9 +18,13 @@ interface TodoEditTitle {
 }
 
 const initialState: TodoState = {
-  todos: [],
+  todos: localStorage.getItem("todos")
+    ? (JSON.parse(localStorage.getItem("todos") as string) as Todo[])
+    : [],
   temp: [],
-  nextIndex: 0,
+  nextIndex: localStorage.getItem("todos")
+    ? JSON.parse(localStorage.getItem("todos") as string).length - 1
+    : 0,
 };
 
 const todoSlice = createSlice({
@@ -34,9 +38,11 @@ const todoSlice = createSlice({
         isCompleted: false,
       });
       state.nextIndex++;
+      localStorage.setItem("todos", JSON.stringify(state.todos));
     },
     removeTodo: (state, action: PayloadAction<number>) => {
       state.todos = state.todos.filter((item) => item.id !== action.payload);
+      localStorage.setItem("todos", JSON.stringify(state.todos));
     },
     changeStatus: (state, action: PayloadAction<number>) => {
       state.todos = state.todos.map((item) => {
@@ -45,6 +51,7 @@ const todoSlice = createSlice({
         }
         return item;
       });
+      localStorage.setItem("todos", JSON.stringify(state.todos));
     },
     editTitle: (state, action: PayloadAction<TodoEditTitle>) => {
       state.todos = state.todos.map((item) => {
@@ -53,6 +60,7 @@ const todoSlice = createSlice({
         }
         return item;
       });
+      localStorage.setItem("todos", JSON.stringify(state.todos));
     },
     filterTodo: (state, action: PayloadAction<string>) => {
       if (state.temp.length === 0) {
